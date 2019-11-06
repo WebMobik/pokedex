@@ -1,0 +1,19 @@
+.error-text {
+    width: 100%;
+}
+
+.error-title,
+.error-pretitle {
+    text-align: center;
+    color: #fff;
+}
+
+.error-pretitle p {
+    margin: 5px 0px;
+}
+
+.error-text img {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+}

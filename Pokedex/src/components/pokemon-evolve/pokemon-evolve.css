@@ -1,0 +1,21 @@
+.pokemon-evolve {
+    display: flex;
+    justify-content: space-around;
+    background: rgb(224, 133, 100);
+    text-align: center;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.pokemon-evolve .evolve {
+    text-align: center;
+    background: #616161;
+    color: #fff;
+    border: 5px solid #fff;
+    padding: 20px;
+    border-radius: 100%;
+    padding: 20px 0px;
+    width: 250px;
+    height: 250px;
+}

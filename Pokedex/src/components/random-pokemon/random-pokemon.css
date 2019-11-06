@@ -1,0 +1,25 @@
+.random-pokemon {
+    background: #E95420;
+    border-radius: 15px 15px;
+    padding: 20px;
+}
+
+.pokemon-img {
+    background: #fff;
+    border-radius: 15px 15px;
+}
+
+.pokemon-detalis {
+    color: #fff;
+    margin-left: 15px;
+}
+
+.pokemon-detalis ul {
+    padding: 0;
+}
+
+.pokemon-detalis li {
+    list-style: none;
+    margin: 5px 20px;
+    letter-spacing: 0.2px;
+}

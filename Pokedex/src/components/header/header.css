@@ -1,0 +1,29 @@
+.header {
+    padding: 0;
+    margin: 0;
+    background: #fff;
+}
+
+.header .image-logo {
+    margin-left: -15px;
+}
+
+.header h2 {
+    margin-top: 15px;
+}
+
+.header ul {
+    display: flex;
+    margin-top: 15px;
+    padding: 0;
+}
+
+.header ul li {
+    list-style: none;
+    margin: 0px 10px;
+}
+
+.header ul li a:hover {
+    transition: 0.5s;
+    text-decoration: none;
+}
