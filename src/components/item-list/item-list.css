@@ -1,0 +1,29 @@
+ul {
+    list-style: none;
+}
+
+.item {
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding: 15px 20px;
+    border-radius: 15px;
+    color: #fff;
+    background: rgb(211, 141, 50);
+    border: 3px solid silver;
+    font-size: 27px;
+    transition: .2s linear;
+}
+
+.item:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px white, 4px 4px #C76637;
+    top: -4px;
+    left: -4px;
+  }
+
+.item img {
+    display: block;
+    margin: 0 auto;
+}

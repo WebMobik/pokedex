@@ -14,17 +14,22 @@ export default class PokeapiService {
 
     async getAllPokemon() {                             // Get All Pokemon
         const res = await this.getResource(`pokemon`);
-        return res.results.map(this._transformPokemon);
+        return res.results.map(this._transformPokemonData);
     }
 
-    async getPokemon(id) {                              // Get one Pokemon
+    async getPokemonEvolveId(id) {                              // Get one Pokemon
         const pokemon = await this.getResource(`pokemon-species/${id}/`);
-        return this._transformPokemon(pokemon);
+        return this._transformId(pokemon);
     }
-    
+
     async getEvolve(id) {                               // Get Evolve pokemon
         const evolve = await this.getResource(`evolution-chain/${id}/`);
-            return this._transformEvolve(evolve)
+        const checkEvolve = (evolve.chain.evolves_to[0].evolves_to).length;
+        if( checkEvolve == 1) {
+            return this._transformTreeEvolve(evolve);
+        } else {
+            return this._transformTwoEvolve(evolve);
+        } 
     }
 
     async getPokemonData(id) {                              // Get one Pokemon
@@ -37,10 +42,10 @@ export default class PokeapiService {
         return item.match(idRegExp)[1];
     }
 
-    _transformPokemon = (pokemon) => {                  // Give data in pokemon
+    _transformId = (pokemon) => {                  // Give data in pokemon
         return {
-            id: pokemon.id,
-            evolve: this._extractId(pokemon.evolution_chain.url),
+            pokemonId: pokemon.id,
+            evolveId: this._extractId(pokemon.evolution_chain.url),
         };
     };
 
@@ -54,7 +59,7 @@ export default class PokeapiService {
         };
     };
 
-    _transformEvolve = (evolve) => {                    // Give data in Evolve
+    _transformTreeEvolve = (evolve) => {                    // Give data in Evolve
         return {
             small: evolve.chain.species.name,
             medium: evolve.chain.evolves_to[0].species.name,
@@ -62,6 +67,15 @@ export default class PokeapiService {
             smallId: this._extractId(evolve.chain.species.url),
             mediumId: this._extractId(evolve.chain.evolves_to[0].species.url),
             largeId: this._extractId(evolve.chain.evolves_to[0].evolves_to[0].species.url),
+        };
+    };
+
+    _transformTwoEvolve = (evolve) => {                    // Give data in Evolve
+        return {
+            small: evolve.chain.species.name,
+            medium: evolve.chain.evolves_to[0].species.name,
+            smallId: this._extractId(evolve.chain.species.url),
+            mediumId: this._extractId(evolve.chain.evolves_to[0].species.url),
         };
     };
 }
