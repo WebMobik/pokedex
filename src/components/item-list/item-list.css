@@ -27,3 +27,16 @@ ul {
     display: block;
     margin: 0 auto;
 }
+
+.pokemon-item {
+    margin: 20px 0px;
+}
+
+a {
+    color: #fff;
+}
+
+.item a:hover {
+    color: #fff;
+    text-decoration: none;
+}

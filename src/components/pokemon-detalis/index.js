@@ -1,3 +1,3 @@
-import PokemonDetalis from './search-panel';
+import PokemonDetails from './pokemon-details';
 
-export default PokemonDetalis;
+export default PokemonDetails;

@@ -5,7 +5,8 @@ const withData = (View, getData) => {
     return class extends Component {
         
         state = {
-            data: null
+            data: null,
+            loading: true
         }
 
         componentDidMount() {
@@ -23,7 +24,7 @@ const withData = (View, getData) => {
             if(!data) {
                 <Spinner />
             }
-
+            console.log(data);
             return <View {... this.props} data={data}/>
         }
     };

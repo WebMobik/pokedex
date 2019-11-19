@@ -1,0 +1,24 @@
+.navigation {
+    display: inline-block;
+    z-index: 1;
+    position: fixed;
+    top: 35%;
+    left: 2%;
+}
+
+.navigation ul li a{
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+
+.navigation ul li{
+    text-align: center;
+}
+
+.navigation ul li a:hover{
+    transition: 0.5s;
+    text-decoration: none;
+    color: rgba(75, 75, 75, 0.8);
+    
+}

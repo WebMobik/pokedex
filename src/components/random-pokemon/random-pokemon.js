@@ -17,11 +17,12 @@ export default class RandomPokemon extends Component {
 
   componentDidMount() {
     this.updatePokemonData();
-    this.interval = setInterval(this.updatePokemonData, 10000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  componentDidUpdate(prevProps) {
+    if (this.props.pokemonId !== prevProps.pokemonId) {
+      this.updatePokemonData();
+    }
   }
 
   onPokemonDataLoaded = (pokemonData) => {
@@ -32,14 +33,12 @@ export default class RandomPokemon extends Component {
   }
   
   updatePokemonData = () => {
-    setTimeout(() => {
-      const id = this.props.pokemonId;
-      this.setState({id});
-      this.pokeapiService
-        .getPokemonData(id)
-        .then(this.onPokemonDataLoaded)
-        .catch(this.props.error);
-    }, 1000)
+    const id = this.props.pokemonId;
+    this.setState({id});
+    this.pokeapiService
+      .getPokemonData(id)
+      .then(this.onPokemonDataLoaded)
+      .catch(this.props.error);
   }
 
   

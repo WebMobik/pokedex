@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
 import './header.css'
 
 export default class Header extends Component {
@@ -13,9 +14,15 @@ export default class Header extends Component {
                     <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png`} width="75px" height="75px" alt="pokemon"/>
                 </div>
                 <ul>
-                    <li className="nav-item"><a href="" className="nav-link">Location</a></li>
-                    <li className="nav-item"><a href="" className="nav-link">Pokemons</a></li>
-                    <li className="nav-item"><a href="" className="nav-link">Trainer</a></li>
+                    <li className="nav-item">
+                        <Link to="/">Main</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/pokemons/">Pokemons</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/about/">About</Link>
+                    </li>
                 </ul>
             </div>
         );

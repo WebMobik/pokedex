@@ -2,42 +2,16 @@ import React, { Component } from "react";
 import PokeapiService from '../../services/pokeapi-service'
 import Header from '../header'
 import ErrorBoundry from '../error-boundry'
-import ItemList from '../item-list'
-import RandomPokemon from '../random-pokemon'
-import PokemonEvolve from '../pokemon-evolve'
+import { PokemonPage, RandomPokemonPage } from '../pages'
+import { PokeServiceProvider } from '../pokemon-service-context'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './app.css'
 
 export default class App extends Component {
 
-  pokeapiService = new PokeapiService();
-
   state = {
-    id: {},
+    pokeapiService: new PokeapiService(),
     loading: true,
-  }
-
-  componentDidMount() {
-    this.givePokemonId();
-    this.interval = setInterval(this.givePokemonId, 10000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  onIdLoaded = (id) => {
-    this.setState({
-      id,
-      loading: false
-    });
-  }
-
-  givePokemonId = () => {
-    const id =  Math.floor(Math.random()*70) + 2; // 21  
-    this.pokeapiService
-      .getPokemonEvolveId(id)
-      .then(this.onIdLoaded)
-      .catch(this.onError)
   }
 
   onError = (err) => {
@@ -46,23 +20,30 @@ export default class App extends Component {
       loading: false,
     })
   }
-  
-  render() {
+
+  render() {;
     
     return (
       <ErrorBoundry>
-        <div className="container">
-          <Header/>
-          {/* <RandomPokemon
-          pokemonId={this.state.id.pokemonId}
-          error={this.state.error}
-          />
-          <PokemonEvolve
-          evolveId={this.state.id.evolveId}
-          onError={this.onError}
-          /> */}
-          <ItemList />
-        </div>
+        <PokeServiceProvider value={this.state.pokeapiService}>
+          <Router>
+            <div className="container">
+
+              <Header/>
+              <Switch>
+                <Route path="/" 
+                        render={() => <h1 className="central-title">Welcome To Pokedex</h1>}
+                        component={RandomPokemonPage}
+                        exact />
+                <Route path="/pokemons/" 
+                        render={() => <h1 className="central-title">Choose you'r pokemon</h1>}
+                        component={PokemonPage}
+                        />
+                <Route render={() => <h1 className="central-title">Page not found !</h1>} />
+              </Switch>
+            </div>
+          </Router>
+        </PokeServiceProvider>
       </ErrorBoundry>
     );
   }

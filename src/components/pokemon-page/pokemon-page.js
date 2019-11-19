@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import ItemList from '../item-list'
 import ErrorIndicator from '../error-indicator'
 import SwapiService from '../../services/pokeapi-service'
-import ErrorBoundry from '../error-boundry'
 
 export default class PokemonPage extends Component {
 
@@ -19,6 +18,8 @@ export default class PokemonPage extends Component {
     }
 
     render() {
+
+        console.log();
         
         if(!selectedPokemon) { // remove !
             return <ErrorIndicator />
@@ -34,6 +35,7 @@ export default class PokemonPage extends Component {
                 )}
 
             </ItemList>
+            
         )
         // const pokemonDetalis = (
         //     <ErrorBoundry>

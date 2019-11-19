@@ -9,6 +9,7 @@ export default class PokemonEvolve extends Component {
     pokeapiService = new PokeapiService();
 
     state = {
+        id: null,
         evolve: {},
         loading: true,
         error: false,
@@ -16,11 +17,12 @@ export default class PokemonEvolve extends Component {
 
     componentDidMount() {
         this.updateEvolve();
-        this.interval = setInterval(this.updateEvolve, 10000);
-      }
-    
-    componentWillUnmount() {
-        clearInterval(this.interval);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.evolveId !== prevProps.evolveId) {
+          this.updateEvolve();
+        }
     }
 
     onEvolveLoaded = (evolve) => {
@@ -31,26 +33,36 @@ export default class PokemonEvolve extends Component {
     }
 
     updateEvolve = () => {
-        setTimeout(() => {
-            const id = this.props.evolveId;
-            this.pokeapiService
-                .getEvolve(id)
-                .then(this.onEvolveLoaded)
-                .catch(this.props.onError);
-        }, 2000)
+        const id = this.props.evolveId;
+        this.pokeapiService
+            .getEvolve(id)
+            .then(this.onEvolveLoaded)
+            .catch(this.props.onError);
     }
 
     render() {
         
         const { evolve, loading, error } = this.state;
-        console.log(evolve);
+
         const { small, medium, large, smallId, mediumId, largeId } = evolve;
         
-        if( loading ) {
+        if( !evolve ) {
             return <Spinner/>
         }
 
-        console.log(large);
+        if(medium == undefined) {
+            return (
+                <div className="pokemon-evolve card">
+                    <h2>Evolution</h2>
+                    <div className="pokemon-evolve">
+                        <div className="first-evolve evolve">
+                            <h3>{ small }</h3>
+                            <img src={`https://pokeres.bastionbot.org/images/pokemon/${smallId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
         if(large == undefined) {
             return (
@@ -69,24 +81,25 @@ export default class PokemonEvolve extends Component {
                 </div>
             )
         }
-            return (
-                <div className="pokemon-evolve card">
-                    <h2>Evolution</h2>
-                    <div className="pokemon-evolve">
-                        <div className="first-evolve evolve">
-                            <h3>{ small }</h3>
-                            <img src={`https://pokeres.bastionbot.org/images/pokemon/${smallId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
-                        </div>
-                        <div className="first-evolve evolve">
-                            <h3>{ medium }</h3>
-                            <img src={`https://pokeres.bastionbot.org/images/pokemon/${mediumId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
-                        </div>
-                        <div className="first-evolve evolve">
-                            <h3>{ large }</h3>
-                            <img src={`https://pokeres.bastionbot.org/images/pokemon/${largeId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
-                        </div>
+
+        return (
+            <div className="pokemon-evolve card">
+                <h2>Evolution</h2>
+                <div className="pokemon-evolve">
+                    <div className="first-evolve evolve">
+                        <h3>{ small }</h3>
+                        <img src={`https://pokeres.bastionbot.org/images/pokemon/${smallId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
+                    </div>
+                    <div className="first-evolve evolve">
+                        <h3>{ medium }</h3>
+                        <img src={`https://pokeres.bastionbot.org/images/pokemon/${mediumId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
+                    </div>
+                    <div className="first-evolve evolve">
+                        <h3>{ large }</h3>
+                        <img src={`https://pokeres.bastionbot.org/images/pokemon/${largeId}.png`}  width="150px" heihgt="150px" alt="evolve"/>
                     </div>
                 </div>
-            )  
+            </div>
+        )  
     }
 }
