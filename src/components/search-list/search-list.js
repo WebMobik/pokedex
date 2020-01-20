@@ -14,13 +14,17 @@ export default class SearchList extends Component {
         this.props.onSearchChange(term);
     };
 
+    giveName = () => {
+        return console.log(this.props.givePokemonName);
+    }
+
     render() {
         return (
             <input
                 placeholder="Search you'r pokemon..."
                 className="inputSearch"
                 value={this.state.term}
-                onChange={this.onSearchChange}
+                onChange={this.giveName}
             />
         )
     }

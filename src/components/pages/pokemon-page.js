@@ -15,6 +15,8 @@ export default class PokemonPage extends Component {
             evolveId: 1,
         },
         term: "",
+        pokemonList: null,
+        pokemonNames: null,
     }
 
     componentDidUpdate(_, prevState) {
@@ -25,6 +27,24 @@ export default class PokemonPage extends Component {
 
     componentDidMount() {
         this.givePokemonId();
+        this.pokeapiService
+        .getAllPokemon()
+        .then((pokemonList) => { 
+            this.setState({
+                pokemonList
+            });
+        });
+    }
+
+    givePokemonName = () => {
+        this.setState(({ pokemonList }) => {
+          const namesArr = pokemonList.map(({name}) => {
+            return name;
+          });
+          return {
+            pokemonNames: namesArr,
+          }
+        });
     }
 
     onSearchChange = (term) => {
@@ -61,7 +81,7 @@ export default class PokemonPage extends Component {
                 <PokemonEvolve
                 evolveId={pokemonSelected.evolveId}
                 />
-                <SearchList />
+                <SearchList onChange={this.givePokemonName} />
                 <ItemList onPokemonSelected={this.onPokemonSelected}/>
             </div>
         )

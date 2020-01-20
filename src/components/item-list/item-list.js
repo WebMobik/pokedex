@@ -11,13 +11,14 @@ export default class ItemList extends Component {
     showItems: null,
     pokemonArr: null,
     pokemonList: null,
+    pokemonNames: null,
     term: "",
   }
 
   componentDidMount() {
     this.pokeapiService
     .getAllPokemon()
-    .then((pokemonList) => {  // я на прямую изменяю текущий массив
+    .then((pokemonList) => { 
       this.setState({
         pokemonList
       });
@@ -31,6 +32,17 @@ export default class ItemList extends Component {
       return {
         showItems: showItems,
         pokemonArr: newArr,
+      }
+    });
+  }
+
+  givePokemonName = () => {
+    this.setState(({ pokemonList }) => {
+      const namesArr = pokemonList.map(({name}) => {
+        return name;
+      });
+      return {
+        pokemonNames: namesArr,
       }
     });
   }
