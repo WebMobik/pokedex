@@ -9,9 +9,9 @@ export default class RandomPokemonPage extends Component {
 
     state = {
         id: {
-            pokemonId: 1
+            pokemonId: 1,
+            evolveId: 1,
         },
-        error: false,
         loading: true,
     }
 
@@ -32,25 +32,17 @@ export default class RandomPokemonPage extends Component {
     }
 
     givePokemonId = () => {
-        const id = Math.floor(Math.random()*105) + 2; // 21  
+        const id = Math.floor(Math.random()*105) + 2;
         this.pokeapiService
           .getPokemonEvolveId(id)
           .then(this.onIdLoaded)
-          .catch(this.onError)
-    }
-
-    onError = () => {
-        this.setState({
-            error: true,
-            loading: false
-        })
     }
 
     render() {
 
-        const { id } = this.state;
+        const { id, loading } = this.state;
 
-        if (!id) {
+        if (loading) {
             return <Spinner />
         }
 
@@ -65,6 +57,7 @@ export default class RandomPokemonPage extends Component {
                 evolveId={id.evolveId}
                 onError={this.onError}
                 />
+                {/* <SearchList /> */}
             </div>
         )
     }

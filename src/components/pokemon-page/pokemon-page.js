@@ -18,8 +18,6 @@ export default class PokemonPage extends Component {
     }
 
     render() {
-
-        console.log();
         
         if(!selectedPokemon) { // remove !
             return <ErrorIndicator />
@@ -37,12 +35,6 @@ export default class PokemonPage extends Component {
             </ItemList>
             
         )
-        // const pokemonDetalis = (
-        //     <ErrorBoundry>
-        //         <PokemonDetails personId={this.state.selectedPokemon}/>
-        //     </ErrorBoundry>
-        // )
-
         return (
             {itemList}
         )

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PokemonEvolve from '../pokemon-evolve';
 import PokemonDetails from '../pokemon-detalis';
 import ItemList from '../item-list';
+import SearchList from '../search-list';
 import PokeapiService from '../../services/pokeapi-service';
-import { Navigation } from '../pokemon-navigation';
 export default class PokemonPage extends Component {
     
     pokeapiService = new PokeapiService();
@@ -12,8 +12,9 @@ export default class PokemonPage extends Component {
         id: 1,
         pokemonSelected: {
             pokemonId: 1,
-            evolveId: 1
+            evolveId: 1,
         },
+        term: "",
     }
 
     componentDidUpdate(_, prevState) {
@@ -26,14 +27,18 @@ export default class PokemonPage extends Component {
         this.givePokemonId();
     }
 
-    onIdLoaded = (pokemonSelected) => { // Why i use id, if id == pokemonSelected !
+    onSearchChange = (term) => {
+        this.setState({ term });
+    }
+
+    onIdLoaded = (pokemonSelected) => { 
         this.setState({
             pokemonSelected,
         });
     }
 
     givePokemonId = () => {
-        const id = this.state.id; // 21  
+        const id = this.state.id;
         this.pokeapiService
           .getPokemonEvolveId(id)
           .then(this.onIdLoaded)
@@ -48,9 +53,7 @@ export default class PokemonPage extends Component {
     
     render() {
         const { pokemonSelected } = this.state;
-
-        console.log(pokemonSelected);
-
+        
         return (
             <div>
                 <h1 className="central-title">Choose you'r pokemon</h1>
@@ -58,7 +61,7 @@ export default class PokemonPage extends Component {
                 <PokemonEvolve
                 evolveId={pokemonSelected.evolveId}
                 />
-                <Navigation />
+                <SearchList />
                 <ItemList onPokemonSelected={this.onPokemonSelected}/>
             </div>
         )

@@ -12,6 +12,7 @@ export default class App extends Component {
   state = {
     pokeapiService: new PokeapiService(),
     loading: true,
+    error: false,
   }
 
   onError = (err) => {
@@ -21,22 +22,19 @@ export default class App extends Component {
     })
   }
 
-  render() {;
+  render() {
     
     return (
       <ErrorBoundry>
         <PokeServiceProvider value={this.state.pokeapiService}>
           <Router>
             <div className="container">
-
               <Header/>
               <Switch>
                 <Route path="/" 
-                        render={() => <h1 className="central-title">Welcome To Pokedex</h1>}
                         component={RandomPokemonPage}
                         exact />
                 <Route path="/pokemons/" 
-                        render={() => <h1 className="central-title">Choose you'r pokemon</h1>}
                         component={PokemonPage}
                         />
                 <Route render={() => <h1 className="central-title">Page not found !</h1>} />

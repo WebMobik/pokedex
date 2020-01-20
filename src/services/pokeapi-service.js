@@ -24,17 +24,18 @@ export default class PokeapiService {
 
     async getEvolve(id) {                               // Get Evolve pokemon
         const evolve = await this.getResource(`evolution-chain/${id}/`);
-        if(evolve.chain.evolves_to.length >= 1) {
+        if(evolve.chain.evolves_to.length === 1) {
             const checkEvolve = (evolve.chain.evolves_to[0].evolves_to).length;
-            if( checkEvolve ==  1 ) {
-                return this._transformTreeEvolve(evolve);
-            } else if ( checkEvolve == 0 ) {
+            if(checkEvolve === 2) {
+                return this._transformTreeEvolve(evolve, 1);    
+            } else if( checkEvolve ===  1 ) {
+                return this._transformTreeEvolve(evolve, 0);
+            } else if ( checkEvolve === 0 ) {
                 return this._transformTwoEvolve(evolve);
             }
         } else {
             return this._transformOneEvolve(evolve);
         }
-        
     }
 
     async getPokemonData(id) {                              // Get Pokemon data
@@ -71,14 +72,14 @@ export default class PokeapiService {
         };
     };
 
-    _transformTreeEvolve = (evolve) => {                    // Give data in Evolve
+    _transformTreeEvolve = (evolve, id) => {                    // Give data in Evolve
         return {
             small: evolve.chain.species.name,
             medium: evolve.chain.evolves_to[0].species.name,
-            large: evolve.chain.evolves_to[0].evolves_to[0].species.name,
+            large: evolve.chain.evolves_to[0].evolves_to[id].species.name,
             smallId: this._extractId(evolve.chain.species.url),
             mediumId: this._extractId(evolve.chain.evolves_to[0].species.url),
-            largeId: this._extractId(evolve.chain.evolves_to[0].evolves_to[0].species.url),
+            largeId: this._extractId(evolve.chain.evolves_to[0].evolves_to[id].species.url),
         };
     };
 
@@ -97,5 +98,4 @@ export default class PokeapiService {
             smallId: this._extractId(evolve.chain.species.url),
         }
     };
-    
 }

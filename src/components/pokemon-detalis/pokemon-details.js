@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Spinner from '../spinner';
 import PokeapiService from '../../services/pokeapi-service'
 import "./pokemon-details.css";
 

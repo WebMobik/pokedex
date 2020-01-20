@@ -11,6 +11,7 @@ export default class ItemList extends Component {
     showItems: null,
     pokemonArr: null,
     pokemonList: null,
+    term: "",
   }
 
   componentDidMount() {

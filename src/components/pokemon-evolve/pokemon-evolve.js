@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './pokemon-evolve.css';
 import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator';
 import PokeapiService from '../../services/pokeapi-service'
 
 export default class PokemonEvolve extends Component {
@@ -12,7 +11,6 @@ export default class PokemonEvolve extends Component {
         id: null,
         evolve: {},
         loading: true,
-        error: false,
     }
 
     componentDidMount() {
@@ -37,20 +35,21 @@ export default class PokemonEvolve extends Component {
         this.pokeapiService
             .getEvolve(id)
             .then(this.onEvolveLoaded)
-            .catch(this.props.onError);
     }
 
     render() {
         
-        const { evolve, loading, error } = this.state;
+        const { loading } = this.state;
 
-        const { small, medium, large, smallId, mediumId, largeId } = evolve;
-        
-        if( !evolve ) {
+        if( loading ) {
             return <Spinner/>
         }
 
-        if(medium == undefined) {
+        const { evolve } = this.state;
+
+        const { small, medium, large, smallId, mediumId, largeId } = evolve;
+
+        if(medium === undefined) {
             return (
                 <div className="pokemon-evolve card">
                     <h2>Evolution</h2>
@@ -64,7 +63,7 @@ export default class PokemonEvolve extends Component {
             )
         }
 
-        if(large == undefined) {
+        if(large === undefined) {
             return (
                 <div className="pokemon-evolve card">
                     <h2>Evolution</h2>
