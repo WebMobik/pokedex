@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Spinner from '../spinner'
 import "./item-list.css";
 import PokeapiService from '../../services/pokeapi-service'
 import { ShowMore } from '../show-more'
@@ -15,18 +14,9 @@ export default class ItemList extends Component {
     term: "",
   }
 
-  componentDidMount() {
-    this.pokeapiService
-    .getAllPokemon()
-    .then((pokemonList) => { 
-      this.setState({
-        pokemonList
-      });
-    });
-  }
-
   showMorePokemon = () => {
     this.setState(({ showItems, pokemonList }) => {
+      pokemonList = this.props.pokemonList;
       showItems += 50;
       const newArr = pokemonList.slice(0, showItems);
       return {
@@ -66,12 +56,8 @@ export default class ItemList extends Component {
 
   render() {
 
-    const { pokemonList, pokemonArr } = this.state;
-
-    if(!pokemonList) {
-      return <Spinner />
-    }
-
+    const { pokemonArr } = this.state;
+    
     if (!pokemonArr) {
       return <ShowMore morePokemon={this.showMorePokemon}/>
     } else if(pokemonArr) {

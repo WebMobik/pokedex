@@ -13,7 +13,7 @@ export default class PokeapiService {
     };
 
     async getAllPokemon() {                             // Get All Pokemon
-        const res = await this.getResource(`pokemon/?offset=0&limit=943`); // 809
+        const res = await this.getResource(`pokemon/?offset=0&limit=700`); // 809
         return res.results.map(this._transformAllPokemon);
     }
 

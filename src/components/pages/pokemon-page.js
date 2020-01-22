@@ -41,6 +41,7 @@ export default class PokemonPage extends Component {
           const namesArr = pokemonList.map(({name}) => {
             return name;
           });
+
           return {
             pokemonNames: namesArr,
           }
@@ -70,10 +71,22 @@ export default class PokemonPage extends Component {
             id
         });
     }
+
+    search = (items, term) => {
+        if(term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        });
+    }
     
     render() {
-        const { pokemonSelected } = this.state;
-        
+        const { pokemonSelected, pokemonList, term } = this.state;
+        console.log(this.state.term);
+        const visiblesItems = this.search(pokemonList, term);
+
         return (
             <div>
                 <h1 className="central-title">Choose you'r pokemon</h1>
@@ -81,8 +94,8 @@ export default class PokemonPage extends Component {
                 <PokemonEvolve
                 evolveId={pokemonSelected.evolveId}
                 />
-                <SearchList onChange={this.givePokemonName} />
-                <ItemList onPokemonSelected={this.onPokemonSelected}/>
+                <SearchList onSearchChange={this.onSearchChange} />
+                <ItemList onPokemonSelected={this.onPokemonSelected} pokemonList={visiblesItems}/>
             </div>
         )
     }
